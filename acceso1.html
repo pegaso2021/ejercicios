@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+  
+    <head>
+        <meta charset="utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+       
+        <title>Formulario de login con Bootstrap</title>
+        <!-- Cargar el CSS de Boostrap-->
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+         <script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+         <!-- Sweet Alert 1.1.3 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    </head>
+
+    <body>
+     <div class="container-fluid">
+            <div class="row">
+                <div id="login" class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12">
+                    <h2 class="text-center">Bienvenidos</h2>
+                    <img  src="img/p1.jpg" />
+
+                   <form id="agregar" autocomplete="off">
+
+                     <div class="modal-body">
+
+                        <input type="hidden" name="accion" class="accion">
+
+                        <input type="hidden" id="id_registro" name="id_registro" class="id_registro">
+
+
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <input type="email" id="usuario" name="usuario" class="usuario form-control" placeholder="Correo electrónico">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="clave" name="clave" class="clave form-control" placeholder="Clave">
+                        </div>
+
+                  <button type="submit" class="btn btn-primary">Entrar</button>
+                       <!--  <button type="button" class="btn btn-primary btn-agregar"><i class="fa fa-plus"></i>Entrar</button>-->
+                       <br>
+                        <a href="#">Contraseña olvidada</a>
+                    </form>
+
+<script>
+  
+   
+$(document).on('submit','#agregar',function(e){
+ 
+ //parametros = $(this).serialize();
+ usuario= $(this).serialize();
+   //accion     = $('.accion').val();
+  //alert(accion)
+  $.ajax({
+ //url:'vaidar.php?op=1',
+ //url:'validar.php?op='+accion,
+ url:'validar.php?op=2',
+
+ type:'POST',
+ data:usuario,
+ dataType:'JSON',
+ beforeSend:function(){
+
+
+
+ swal({
+  title  : "Cargando",
+  text   : "No cierre la Ventana",
+  imageUrl:"img/loader2.gif",
+  showConfirmButton:true
+ });
+ },
+ success:function(data){
+  //Cargar Data
+//loadData();
+
+  swal({
+   title   : data.title,
+   text    : data.text,
+   type    : data.type,
+   timer   :2000,
+   showConfirmButton:true
+  });
+
+ }
+ });
+e.preventDefault();
+});
+
+
+ </script>
+                         </div>
+
+                      </div>
+                 </div>
+            </div>
+       </body>
+
+</html>
