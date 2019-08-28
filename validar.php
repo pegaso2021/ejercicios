@@ -26,29 +26,7 @@ switch ($opcion) {
 	
 case 1:
 
-     try {
     
-  //Query SQL
-    $query = " select nombres, apellidos,correo from usuarios order by nombres";
-
-     //Sentencia Preparada
-     $statement = $conexion->prepare($query);
-
-     //Ejecutar el código SQL(Query)
-     $statement->execute();
-
-     //Array de Datos
-     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-   
-     echo json_encode($result);
-
-        
-    } catch (Exception $e) {
-
-    echo "Error: ".$e->getMessage();
-        
-    }
     
     break;
 
@@ -56,18 +34,20 @@ case 2:
 
 
     $usuario = $_REQUEST['usuario'];
+    $clave = $_REQUEST['clave'];
 
       try {
     
     //Query SQL
 
         
-     $query1 = " select nombres, apellidos, correo from usuarios where  correo=:usuario ";
+     $query1 = " select nombres, apellidos, correo from usuarios where  correo=:usuario and nickname=:clave ";
 
      //Sentencia Preparada
      $statement = $conexion->prepare($query1);
 
     $statement->bindParam(':usuario',$usuario);
+      $statement->bindParam(':clave',$clave);
 
      //Ejecutar el código SQL(Query)
      $statement->execute();
@@ -75,7 +55,51 @@ case 2:
      //Array de Datos
      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-     echo json_encode($result);
+   //  echo json_encode($result);
+     if (count($result)>0)
+     {
+
+        //echo json_encode("existe");
+
+        echo json_encode(
+    
+                    array(
+                   
+                    'title'=>'Buen Trabajo',
+                    'text' =>'Registro Agregado',
+                    'type' =>'success'
+
+                    )
+
+                    );
+
+
+        //******
+     }
+
+     else 
+         {
+
+        //echo  json_encode ("no existe");
+
+
+echo json_encode(
+    
+    array(
+   
+    'title'=>'ERROR1',
+    'text' =>'XXX',
+   'type' =>'ERROR'
+
+    )
+
+    );
+
+
+
+
+        //****
+     }
 
         
     } catch (Exception $e) {
@@ -83,6 +107,8 @@ case 2:
     echo "Error: ".$e->getMessage();
         
     }
+
+           
 
   break;
 

@@ -57,9 +57,9 @@
    
 $(document).on('submit','#agregar',function(e){
  
- //parametros = $(this).serialize();
+ 
  usuario= $(this).serialize();
-   //accion     = $('.accion').val();
+ //  accion     = $('.accion').val();
   //alert(accion)
   $.ajax({
  //url:'vaidar.php?op=1',
@@ -71,32 +71,40 @@ $(document).on('submit','#agregar',function(e){
  dataType:'JSON',
  beforeSend:function(){
 
-
-
  swal({
-  title  : "Cargando",
+ title  : "Cargando",
   text   : "No cierre la Ventana",
   imageUrl:"img/loader2.gif",
   showConfirmButton:true
  });
- },
+
+
+},
  success:function(data){
+
   //Cargar Data
 //loadData();
 
   swal({
+  
    title   : data.title,
    text    : data.text,
    type    : data.type,
    timer   :2000,
    showConfirmButton:true
+
   });
 
- }
+ //$('#modal-registro').modal('hide');
+
+ },
+
+
  });
+
 e.preventDefault();
 });
-
+ 
 
  </script>
                          </div>
